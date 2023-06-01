@@ -1,0 +1,36 @@
+<h1>Student List</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Student Name</th>
+      <th>Signature Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for student in students %}
+    <tr>
+      <td>{{ student.name }}</td>
+      <td>
+        {% for signature in signatures %}
+          {% if signature.student == student %}
+            {% if signature.is_signed %}
+              Signed
+            {% else %}
+              Not Signed
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </td>
+      <td>
+        {% if signature.is_signed %}
+          <a href="{% url 'view_marks' student_id=student.id %}">View Marks</a>
+        {% else %}
+          <a href="{% url 'sign_marks' student_id=student.id %}">Sign Marks</a>
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

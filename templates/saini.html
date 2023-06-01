@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>ATTEND</title>
+       
+    </head>
+
+    <body>
+        <h1 class="heading">Attend Class</h1>
+        <div class="container">
+
+        
+                <p class="w-message">By clicking the button below you will be marked present in class!</p>
+                
+                <form method="POST">
+                    {% csrf_token %}
+                    <button class="b-attend">ATTEND</button>
+                </form>
+                
+            
+        </div>
+    </body>
+</html>

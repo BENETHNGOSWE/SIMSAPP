@@ -1,0 +1,27 @@
+  <!-- <h1>Add Marks</h1>
+<h1>ccccccccc</h1>
+<p>Student: {{ student.name }}</p>
+
+<form method="POST">
+  {% csrf_token %}
+  
+  {{ form.as_p }}
+  
+  <button type="submit">Save</button>
+</form> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Profile</title>
+</head>
+<body>
+    <h1>Student Profile</h1>
+    <form method="POST" action="{% url 'student_profile' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="saini">Upload Signature:</label>
+        <input type="text" name="saini" required><br><br>
+        <input type="submit" value="Upload Signature">
+    </form>
+</body>
+</html>

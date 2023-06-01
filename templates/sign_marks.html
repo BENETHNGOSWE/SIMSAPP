@@ -1,0 +1,38 @@
+<!-- <h1>Sign Marks</h1>
+
+<p>Student Name: {{ student.name }}</p>
+
+{% if signature %}
+  <p>Your signature: {{ signature.signature }}</p>
+{% else %}
+  <p>No signature found.</p>
+{% endif %}
+
+<p>Marks:</p>
+<ul>
+  {% for mark in marks %}
+  <tr>
+    <td>{{ mark.subject }}</td>
+    <td>{{ mark.marks }}</td>
+  </tr>
+  {% endfor %}
+</ul>
+
+<form method="POST" action="{% url 'sign_marks' student_id=student.id %}">
+  {% csrf_token %}
+  <button type="submit">Sign</button>
+</form> -->
+
+
+
+
+{% block content %}
+  <h1>Sign Marks</h1>
+  <p>Subject: {{ marks.subject }}</p>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign</button>
+  </form>
+{% endblock %}

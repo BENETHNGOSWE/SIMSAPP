@@ -1,0 +1,33 @@
+<h1>Student Marks List</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Student Name</th>
+      <th>CA Marks</th>
+      <th>UE Marks</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for student in students %}
+    <tr>
+      <td>{{ student.name }}</td>
+      <td>
+        {% for lecture_ue in lecture %}
+          {% if lecture_ue.student == student %}
+            {{ lecture_ue.marks }}
+          {% endif %}
+        {% endfor %}
+      </td>
+      <td>
+        {% for lecture in lectures %}
+        {% if lecture.student == student %}
+        {{ lecture.marks }}
+        {% endif %}
+        {% endfor %}
+      </td>
+      
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

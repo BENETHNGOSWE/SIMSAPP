@@ -1,0 +1,46 @@
+<h1>Teacher View</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Student Name</th>
+      <th>Lecture</th>
+      <th>Test 1</th>
+      <th>Test 2</th>
+      <th>Individual 1</th>
+      <th>Individual 2</th>
+      <th>Group</th>
+      <th>Presentation</th>
+      <th>Marks</th>
+      <th>Signature</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for student in students %}
+      {% for lecture in student.lectureue_set.all %}
+        <tr>
+          {% if forloop.first %}
+            <td rowspan="{{ student.lectureue_set.count }}">{{ student.name }}</td>
+          {% endif %}
+          <td>{{ lecture.lecture }}</td>
+          <td>{{ lecture.test1 }}</td>
+          <td>{{ lecture.test2 }}</td>
+          <td>{{ lecture.individual1 }}</td>
+          <td>{{ lecture.individual2 }}</td>
+          <td>{{ lecture.group }}</td>
+          <td>{{ lecture.presentation }}</td>
+          <td>{{ lecture.marks }}</td>
+          <td>{{ student.saini }}</td>
+          <td>
+            {% if lecture.signed %}
+              Signed
+            {% else %}
+              <a href="{% url 'sign_mark' lecture.id %}">Sign</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    {% endfor %}
+  </tbody>
+</table>

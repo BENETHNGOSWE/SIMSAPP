@@ -1,0 +1,11 @@
+<form method="POST" action="{% url 'course_students' %}">
+    {% csrf_token %}
+    <label for="course">Select a Course:</label>
+    <select id="course" name="course">
+      {% for course in courses %}
+        <option value="{{ course.id }}">{{ course.name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Submit</button>
+  </form>
+  

@@ -1,0 +1,11 @@
+<h1>{{ selected_course.name }} Students</h1>
+
+{% if students %}
+   <ul>
+       {% for student in students %}
+           <li>{{ student.name }}</li>
+       {% endfor %}
+   </ul>
+{% else %}
+   <p>No students registered for this course.</p>
+{% endif %}

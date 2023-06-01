@@ -1,0 +1,41 @@
+
+<!-- <table>
+  
+    <thead>
+      <tr>
+        <th>Student Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in students %}
+      <tr>
+        <td>{{ student.name }}</td>
+        <td>
+          <a href="{% url 'add_ue_marks' student_id=student.id %}">Select</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+   -->
+
+
+   <!DOCTYPE html>
+   <html>
+   <head>
+       <title>Admin Recruit Student</title>
+   </head>
+   <body>
+       <h1>Admin Recruit Student</h1>
+       <form method="POST" action="{% url 'admin_recruit_student' %}">
+           {% csrf_token %}
+           <label for="name">Name:</label>
+           <input type="text" name="name" required><br><br>
+           <label for="reg_no">Registration Number:</label>
+           <input type="text" name="reg_no" required><br><br>
+           <input type="submit" value="Recruit">
+       </form>
+   </body>
+   </html>
+   

@@ -1,38 +1,14 @@
-<h1>Student View</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Lecture</th>
-      <th>Test 1</th>
-      <th>Test 2</th>
-      <th>Individual 1</th>
-      <th>Individual 2</th>
-      <th>Group</th>
-      <th>Presentation</th>
-      <th>Marks</th>
-      <th>Signed</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for mark in marks %}
-      <tr>
-        <td>{{ mark.lecture }}</td>
-        <td>{{ mark.test1 }}</td>
-        <td>{{ mark.test2 }}</td>
-        <td>{{ mark.individual1 }}</td>
-        <td>{{ mark.individual2 }}</td>
-        <td>{{ mark.group }}</td>
-        <td>{{ mark.presentation }}</td>
-        <td>{{ mark.marks }}</td>
-        <td>
-          {% if mark.signed %}
-            Signed
-          {% else %}
-            <a href="{% url 'sign_mark' mark.id %}">Sign</a>
-          {% endif %}
-        </td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send Claim</title>
+</head>
+<body>
+    <h2>Send Claim</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

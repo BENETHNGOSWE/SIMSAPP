@@ -1,7 +1,15 @@
 from django.urls import path
-from .views import  manage_marks,update_marks,student_profile,admin_add_student,course_students_detail,course_students,dashboard,teacher_view,view_marks_and_sign,add_marks,StudentList,select_student,add_ue_marks, StudentListUE, select_student_ue,view_marks,sign_marks,sign_mark,student_view
+from .views import send_claim,index_view,admin,login_view,lecture_login_view, manage_marks,update_marks,student_profile,admin_add_student,course_students_detail,course_students,dashboard,teacher_view,view_marks_and_sign,add_marks,StudentList,select_student,add_ue_marks, StudentListUE, select_student_ue,view_marks,sign_marks,sign_mark,student_view
 
 urlpatterns = [
+# -------------------homepage link-------------------------------- 
+     path('', index_view, name='index'),
+
+#--------------------mwanafunzi na mwalimu kulogin--------------------------  
+     path('logins/', login_view, name='login'),
+     path('lecture-login/', lecture_login_view, name='lecture_login'),
+
+
 # ---------------------------admin---------------------------------------------------
     path('admin-add-student/', admin_add_student, name='admin_add_student'),
     path('student/profile/', student_profile, name='student_profile'), 
@@ -18,9 +26,16 @@ urlpatterns = [
 
     path('updatemarks/<str:student_id>/', update_marks, name='update_marks'),
     path('marksdata/', manage_marks, name='manage_marks'),
+
+#-----------------------mwalimu dashboard----------------------------------   
+     path('adminpage/', admin, name='adminpage'),
+
 # ---------------------------student---------------------------------------------------------
     path('student/<int:student_id>/', student_view, name='student_view'),
 
+#-----------------------mwanafunzi kutuma claim-----------------------------  
+     path('send-claim/', send_claim, name='send_claim'),
+     
 # ------------------------------------------------------------------------------------
 
    

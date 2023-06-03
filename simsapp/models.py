@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+
 
 class Course(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
@@ -17,12 +19,25 @@ class Module(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length=100)
     reg_no = models.CharField(max_length=50)
-    module = models.ForeignKey(Module, on_delete=models.CASCADE, null=True, blank=True)
+    module = models.ManyToManyField(Module, null=True, blank=True)
     courses = models.ManyToManyField(Course, null=True, blank=True)
+    is_admin= models.BooleanField('Is admin', default=False)
+    is_student = models.BooleanField('Is student', default=False)
+    password = models.CharField(max_length=100, null=True, blank=True)
+    
     # signature = models.ImageField(upload_to='signatures/', null=True, blank=True)
     saini = models.CharField(max_length=100, null=True, blank=True)
     def __str__(self):
         return self.name
+
+
+class Claim(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+
 
 class Status(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)

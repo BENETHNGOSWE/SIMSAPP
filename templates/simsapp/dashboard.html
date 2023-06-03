@@ -168,7 +168,7 @@
       <h3>CA SIGN SYSTEM</h3>
     </div>
     <div class="right_area">
-      <a href="/logout" class="logout_btn" style="border-radius:0px;">Logout</a>
+      <a href="{% url 'index'%}" class="logout_btn" style="border-radius:0px;">Logout</a>
     </div>
   </header>
   <!--header area end-->
@@ -178,13 +178,13 @@
 
       <img src="" class="profile_image" alt="">
       <h4>{{request.user.first_name}}</h4>
-      <h6 style="color: rgb(255, 255, 255);">( Lecture )</h6>
+      <h6 style="color: rgb(255, 255, 255);">( Student )</h6>
 
     </center>
 
-    <a href="/student/student-dashboard"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
-    <a href="/student/student-exam"><i class="fas fa-book"></i><span>Examination</span></a>
-    <a href="/student/student-marks"><i class="fas fa-sort-numeric-up"></i><span>My Marks</span></a>
+    <a href="#"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+    <a href="{% url 'course_students'%}"><i class="fas fa-book"></i><span>My Module</span></a>
+    <a href="{% url 'teacher_view' %}"><i class="fas fa-sort-numeric-up"></i><span>My Marks</span></a>
   </div>
   <!--sidebar end-->
 

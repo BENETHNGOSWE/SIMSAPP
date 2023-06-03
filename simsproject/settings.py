@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'simsapp',
-    'student',
+    # 'student',
+    # 'account',
 ]
 
 MIDDLEWARE = [
@@ -76,13 +77,22 @@ WSGI_APPLICATION = 'simsproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+      'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'sims',
+        'USER': 'benethemmanuel',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '3306 ',
     }
-}
-
+} 
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -123,3 +133,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/dashboard/' # URL to redirect to after successful login
 LOGIN_URL = '/login/' # URL to redirect to if user is not logged in
+# AUTH_USER_MODEL = 'student.User'
+# AUTH_USER_MODEL = 'simsapp.Student'
+# AUTH_USER_MODEL ='account.User'

@@ -1,7 +1,53 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Student, Lecture, LectureUE, SignStatus,Course, Module
-from .forms import MarksForm, LectureUEForm, SignForm
+from .models import Claim,Student, Lecture, LectureUE, SignStatus,Course, Module
+from .forms import MarksForm, LectureUEForm, SignForm, ClaimForm
 from django.urls import reverse
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
+# ------------------------------------PAGE YA KUCHAGUA ROLE------------------
+def index_view(request):
+    return render(request, 'index.html')
+
+# -------------------------MWANAFUNZI LOGIN-----------------------------------
+
+def login_view(request):
+    if request.method == 'POST':
+        reg_no = request.POST['reg_no']
+        
+        try:
+            student = Student.objects.get(reg_no=reg_no)
+            # Perform login directly without checking the password
+            request.session['student_id'] = student.id
+            return redirect('student_view', student_id=student.id)
+        except Student.DoesNotExist:
+            messages.error(request, 'Invalid reg_no. Please try again.')
+    
+    return render(request, 'student/login.html')
+
+# -----------------------------MWALIMU LOGIN--------------------------------
+
+def lecture_login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None and user.is_superuser:
+            login(request, user)
+            return redirect('adminpage')  # Replace 'lecture_dashboard' with the actual URL name for the lecture dashboard
+        else:
+            messages.error(request, 'Invalid username or password. Please try again.')
+    
+    return render(request, 'student/lecture_login.html')
+
+def admin(request):
+    return render(request,'student/teacher_dashboard.html')
+
+
+
 
 # ---------------------------------MSAJIRI KUADD MWANAFUNZI-----------------------------------------------
 def admin_add_student(request):
@@ -62,18 +108,6 @@ def add_marks(request, student_id):
     return render(request, 'simsapp/add_marks.html', {'form': form, 'student': student})
 
 
-# def add_marks(request, student_id):
-#     student = Student.objects.get(id=student_id)
-#     if request.method == "POST":
-#         form = MarksForm(request.POST)
-#         if form.is_valid():
-#             form.instance.student = student
-#             form.save()
-#         return redirect('/marksdata')   
-
-#     else:
-#         form = MarksForm()
-#         return render(request, 'simsapp/add_marks.html', {"form":form, 'student': student})  
 
 # ------------------------update marks za mwanafunzi---------------------------
 def update_marks(request, pk):
@@ -104,30 +138,7 @@ def update_marks(request, student_id):
         form = MarksForm(instance=lectureue)
 
     return render(request, 'simsapp/add_marks.html', {'form': form, 'student': student})    
-# def update_marks(request, pk):
-#     course = Student.objects.get(id=pk)
-#     form = MarksForm(instance=course)
 
-#     if request.method == "POST":
-#         form = MarksForm(request.POST, instance=course)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('/show_marks')
-
-#     context = {"form":form}
-#     return render(request, 'simsapp/add_marks.html', context)
-# def update_marks(request, pk):
-#     lectureue = get_object_or_404(LectureUE, id=pk)
-#     form = MarksForm(instance=lectureue)
-
-#     if request.method == "POST":
-#         form = MarksForm(request.POST, instance=lectureue)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('/show_marks')
-
-#     context = {"form": form}
-#     return render(request, 'simsapp/add_marks.html', context)
 # ------------------------kumanage wanafunzi wote-------------------------
 def manage_marks(request):
     lectures = LectureUE.objects.all()
@@ -177,18 +188,35 @@ def course_students_detail(request, course_id):
     return render(request, 'simsapp/course_students.html', context)
 
 # ------------------------mwanafunzi ------------------------------------------
-def student_view(request, student_id):
-    student = get_object_or_404(Student, pk=student_id)
-    marks = LectureUE.objects.filter(student=student)
-    module = Module.objects.filter(student=student)
-    context = {
-        'student': student,
-        'marks': marks,
-        'module':module,
-    }
-    return render(request, 'student/student_view.html', context)
 
+# def student_view(request, student_id):
+#     student = get_object_or_404(Student, pk=student_id)
+#     marks = LectureUE.objects.filter(student=student)
+#     module = Module.objects.filter(student=student)
+#     context = {
+#         'student': student,
+#         'marks': marks,
+#         'module':module,
+#     }
+#     return render(request, 'student/student_view.html', context)
 
+ 
+
+# --------------------KUTUMA CLAIM MWANAFUZI-------------------------------
+
+def send_claim(request):
+    if request.method == 'POST':
+        form = ClaimForm(request.POST)
+        if form.is_valid():
+            claim = form.save(commit=False)
+            claim.student = request.user
+            # claim.teacher = claim.student.module.teacher
+            claim.save()
+            return redirect('student_view', student_id=request.user.id)
+    else:
+        form = ClaimForm()
+    
+    return render(request, 'student_view.html', {'form': form})
 
 
 

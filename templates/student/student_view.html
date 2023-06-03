@@ -1,4 +1,4 @@
-{% extends "simsapp/dashboard.html"%}
+{% extends "simsapp/dashboard.html" %}
 
 {% block content %}
 
@@ -31,14 +31,15 @@
             <th>Presentation</th>
             <th>Marks</th>
             <th>Signed</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {% for mark in marks %}
-            {% for modu in module%}
+            {% for modu in module %}
             <tr>
               <td>{{ modu.modulename }}</td>
-              <td>{{modu.modulecode}}</td>
+              <td>{{ modu.modulecode }}</td>
               <td>{{ mark.test1 }}</td>
               <td>{{ mark.test2 }}</td>
               <td>{{ mark.individual1 }}</td>
@@ -51,6 +52,11 @@
                   Signed
                 {% else %}
                   <a href="{% url 'sign_mark' mark.id %}">Sign</a>
+                {% endif %}
+              </td>
+              <td>
+                {% if not mark.signed %}
+                  <a href="{% url 'send_claim' %}" class="btn btn-primary">Send Claim</a>
                 {% endif %}
               </td>
             </tr>
